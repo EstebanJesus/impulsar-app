@@ -1,0 +1,21 @@
+#logging:
+#  level:
+#    ROOT: ERROR
+spring:
+  datasource:
+    url: 'jdbc:oracle:thin:@dbimpulsarapp_medium?TNS_ADMIN=D:/Users/Usuario/IdeaProjects/GitHub/ecci/impulsar-app/impulsar-api/cloud/Wallet_DBIMPULSARAPP'
+    username: ADMIN
+    password: impulsarapp*2020DIC
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+  liquibase:
+    contexts: cloud
+    drop-first: true
+server:
+  port: 8081
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
+    min-response-size: 1024

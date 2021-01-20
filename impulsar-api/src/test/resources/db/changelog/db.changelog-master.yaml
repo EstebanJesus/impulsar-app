@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: migrations/00000000000000_initial_schema.yaml
+      relativeToChangelogFile: true
+#  - includeAll:
+#      path: data
+#      relativeToChangelogFile: true

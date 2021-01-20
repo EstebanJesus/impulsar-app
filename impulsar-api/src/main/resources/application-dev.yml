@@ -1,0 +1,20 @@
+#logging:
+#  level:
+#    ROOT: DEBUG
+spring:
+  devtools:
+    restart:
+      enabled: true
+      additional-exclude: static/**
+  datasource:
+    url: jdbc:postgresql://localhost:5432/impulsarte
+    username: app-user-wed
+    password: 4567uhgvdt267u3ehdt7
+#  jpa:
+#    hibernate:
+#      ddl-auto: create-drop
+  liquibase:
+    contexts: dev
+    drop-first: true
+server:
+  port: 8081

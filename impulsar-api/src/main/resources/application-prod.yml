@@ -1,0 +1,21 @@
+#logging:
+#  level:
+#    ROOT: ERROR
+spring:
+  datasource:
+    url: 'jdbc:oracle:thin:@//localhost:1521/XEPDB1'
+    username: USR_IMPULSAR
+    password: Oracle2021
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+  liquibase:
+    contexts: prod
+    drop-first: true
+server:
+  port: 8081
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
+    min-response-size: 1024

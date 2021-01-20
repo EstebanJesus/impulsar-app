@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  impulsar-postgres:
+    image: postgres:12.3
+    container_name: impulsar-postgres
+    # volumes:
+    #     - ~/volumes/jhipster/jhipsterApp/postgresql/:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_DB: impulsarte
+      POSTGRES_USER: app-user-wed
+      POSTGRES_PASSWORD: 4567uhgvdt267u3ehdt7
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - 5432:5432
+  impulsar-oracle:
+    image: oracle/database:18.4.0-xe
+    container_name: impulsar-oracle
+    volumes:
+      - oracle-oradata:/opt/oracle/oradata
+    environment:
+      ORACLE_PWD: Oracle2021
+      ORACLE_CHARACTERSET: AL32UTF8
+    ports:
+      - 1521:1521
+      - 5500:5500
+volumes:
+  oracle-oradata:

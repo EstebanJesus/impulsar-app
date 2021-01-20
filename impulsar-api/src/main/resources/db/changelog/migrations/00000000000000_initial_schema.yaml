@@ -1,0 +1,152 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: jesus
+      context: dev, prod, cloud
+      comment: "Some comments go here"
+      changes:
+        - createSequence:
+            sequenceName: user_app_seq
+            startValue: 1
+            incrementBy: 1
+        - createTable:
+            tableName: user_app
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  defaultValueSequenceNext: user_app_seq
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: login
+                  type: varchar(50)
+                  constraints:
+                    unique: true
+                    nullable: false
+                    uniqueConstraintName: ux_user_app_email
+              - column:
+                  name: password_hash
+                  type: varchar(60)
+              - column:
+                  name: first_name
+                  type: varchar(50)
+              - column:
+                  name: last_name
+                  type: varchar(50)
+              - column:
+                  name: email
+                  type: varchar(191)
+              - column:
+                  name: image_url
+                  type: varchar(256)
+              - column:
+                  name: activated
+                  type: boolean
+                  valueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lang_key
+                  type: varchar(10)
+              - column:
+                  name: activation_key
+                  type: varchar(20)
+              - column:
+                  name: reset_key
+                  type: varchar(20)
+              - column:
+                  name: created_by
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_date
+                  type: timestamp
+              - column:
+                  name: reset_date
+                  type: timestamp
+                  constraints:
+                    nullable: true
+              - column:
+                  name: last_modified_by
+                  type: varchar(50)
+              - column:
+                  name: last_modified_date
+                  type: timestamp
+        - createTable:
+            tableName: authority
+            columns:
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+        - createTable:
+            tableName: user_app_authority
+            columns:
+              - column:
+                  name: user_app_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: authority_name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: user_app_authority
+            columnNames: user_app_id, authority_name
+        - addForeignKeyConstraint:
+            baseColumnNames: authority_name
+            baseTableName: user_app_authority
+            constraintName: fk_authority_name
+            referencedColumnNames: name
+            referencedTableName: authority
+        - addForeignKeyConstraint:
+            baseColumnNames: user_app_id
+            baseTableName: user_app_authority
+            constraintName: fk_user_app_id
+            referencedColumnNames: id
+            referencedTableName: user_app
+        - addNotNullConstraint:
+            columnName: password_hash
+            columnDataType: varchar(60)
+            tableName: user_app
+        - loadData:
+            relativeToChangelogFile: true
+            file: data/user.csv
+            separator: ;
+            tableName: user_app
+            columns:
+              - column:
+                  name: activated
+                  type: boolean
+              - column:
+                  name: created_date
+                  type: timestamp
+        - dropDefaultValue:
+            tableName: user_app
+            columnName: created_date
+            columnDataType: datetime
+        - loadData:
+            relativeToChangelogFile: true
+            file: data/authority.csv
+            separator: ;
+            tableName: authority
+            columns:
+              - column:
+                  name: name
+                  type: string
+        - loadData:
+            relativeToChangelogFile: true
+            file: data/user_authority.csv
+            separator: ;
+            tableName: user_app_authority
+            columns:
+              - column:
+                  name: user_app_id
+                  type: numeric
